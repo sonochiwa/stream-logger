@@ -1,14 +1,21 @@
-.PHONY: build
-.SILENT: build run
+.SILENT: run_master build_master run_agent build_agent
 
-build:
-	export $GOPATH=/usr/local/go/src
-	go build -o build/main cmd/stream_logger/main.go
-	@echo "[make] App successfully built!"
+build_master:
+	go build -o master/master/main master/cmd/stream_logger/main.go
+	@echo "Master app successfully built!"
 
-run:
-	export $GOPATH=/usr/local/go/src
-	@echo "[make] Run app..."
-	./build/main
+run_master:
+	@echo "Run master app..."
+	./master/build/main
 
-build_and_run: build run
+build_and_run_master: build_master run_master
+
+build_agent:
+	go build -o agent/build/main agent/cmd/stream_logger/main.go
+	@echo "Agent app successfully built!"
+
+run_agent:
+	@echo "Run agent app..."
+	./agent/build/main
+
+build_and_run_agent: build_agent run_agent
